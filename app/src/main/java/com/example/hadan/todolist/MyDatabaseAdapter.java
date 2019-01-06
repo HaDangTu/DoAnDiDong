@@ -1,12 +1,11 @@
 package com.example.hadan.todolist;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,4 +88,21 @@ public class MyDatabaseAdapter extends SQLiteOpenHelper {
         return listNote;
     }
 
+    public int Update (int ID, String tile, String content, Date dateCreate){
+        SQLiteDatabase database;
+        database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Tile, tile);
+        values.put(Content, content);
+
+        String whereClause = this.ID + " = " + ID;
+
+        return  database.update(
+                TABLE_NAME,
+                values,
+                whereClause,
+                null
+        );
+    }
 }

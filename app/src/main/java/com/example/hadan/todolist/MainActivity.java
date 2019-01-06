@@ -1,10 +1,7 @@
 package com.example.hadan.todolist;
 
-import android.content.ContentValues;
-import android.database.Cursor;
+
 import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.support.annotation.MainThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+
 
 import java.util.List;
 import java.util.ArrayList;
@@ -45,19 +43,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         recyclerView = findViewById(R.id.listNote);
+        //load data from database and init myReviewAdapter
         data = new ArrayList<>();
         loadDataFromDatabase();
 
-        myReViewAdapter = new MyRecyclerViewAdapter(data);
-
+        myReViewAdapter = new MyRecyclerViewAdapter(this, data);
+        myReViewAdapter.setOnItemClickedListenter(new MyRecyclerViewAdapter.OnItemClickedListenter() {
+            @Override
+            public void onItemClick(Intent intent) {
+                startActivity(intent);
+            }
+        });
+        //set layout for note in recyclerview
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myReViewAdapter);
+
     }
 
+    @Override
+    public void onStart(){
+        loadDataFromDatabase();
+        myReViewAdapter.setData(data);
+        super.onStart();
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -87,5 +101,6 @@ public class MainActivity extends AppCompatActivity {
         database = myDBAdapter.getReadableDatabase();
         data = myDBAdapter.SelectAll(database);
     }
+
 
 }
