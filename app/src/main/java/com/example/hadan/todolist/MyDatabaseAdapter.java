@@ -5,9 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.format.DateFormat;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MyDatabaseAdapter extends SQLiteOpenHelper {
 
@@ -63,7 +71,7 @@ public class MyDatabaseAdapter extends SQLiteOpenHelper {
         String tmpTile;
         String tmpContent;
         long tmpId;
-        java.util.Date tmpdate;
+        Date date;
 
         while(cursor.moveToNext())
         {
@@ -71,16 +79,19 @@ public class MyDatabaseAdapter extends SQLiteOpenHelper {
             tmpTile = cursor.getString(cursor.getColumnIndexOrThrow(Tile));
             tmpContent = cursor.getString(cursor.getColumnIndexOrThrow(Content));
 
-            /*SimpleDateFormat sdf = new SimpleDateFormat("dd//MM//yyyy hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.US);
+
             String dateInString = cursor.getString(cursor.getColumnIndexOrThrow(Date));
+            System.out.println(dateInString);
             try {
-                tmpdate = sdf.parse(dateInString);
+                date = sdf.parse(dateInString);
+                System.out.println(date);
             }catch(ParseException e){
                 e.printStackTrace();
                 return null;
-            }*/
+            }
 
-            Note note = new Note((int) tmpId, tmpTile, tmpContent);
+            Note note = new Note((int) tmpId, tmpTile, tmpContent, date);
             listNote.add(note);
         }
 
@@ -104,5 +115,12 @@ public class MyDatabaseAdapter extends SQLiteOpenHelper {
                 whereClause,
                 null
         );
+    }
+
+    public int Delete(int ID){
+        SQLiteDatabase database;
+        String selection = this.ID + " = " + ID;
+        database = this.getWritableDatabase();
+        return database.delete(TABLE_NAME, selection, null);
     }
 }

@@ -57,10 +57,12 @@ public class ViewNoteActivity extends AppCompatActivity {
                             if(mDbAdapter.Update(id,
                                     viewTileED.getText().toString(),
                                     viewContentED.getText().toString(),
-                                    new Date()) > 0)
+                                    new Date()) > 0){
 
                             Toast.makeText(ViewNoteActivity.this, "Successfull",
                                     Toast.LENGTH_LONG).show();
+                                finish();
+                            }
                             else
                                 Toast.makeText(ViewNoteActivity.this, "Fail",
                                         Toast.LENGTH_LONG).show();

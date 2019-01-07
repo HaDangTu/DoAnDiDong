@@ -13,7 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-
+import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     MyRecyclerViewAdapter myReViewAdapter;
     RecyclerView recyclerView;
     List<Note> data;
+
+    Button btnDel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.listNote);
         //load data from database and init myReviewAdapter
         data = new ArrayList<>();
-        loadDataFromDatabase();
+        data = loadDataFromDatabase();
 
         myReViewAdapter = new MyRecyclerViewAdapter(this, data);
         myReViewAdapter.setOnItemClickedListenter(new MyRecyclerViewAdapter.OnItemClickedListenter() {
@@ -62,15 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myReViewAdapter);
-
     }
 
     @Override
     public void onStart(){
-        loadDataFromDatabase();
+        data = loadDataFromDatabase();
         myReViewAdapter.setData(data);
+        recyclerView.setAdapter(myReViewAdapter);
         super.onStart();
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,13 +96,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void loadDataFromDatabase(){
+    public List<Note> loadDataFromDatabase(){
         SQLiteDatabase database;
         MyDatabaseAdapter myDBAdapter;
         myDBAdapter = new MyDatabaseAdapter(this);
         database = myDBAdapter.getReadableDatabase();
-        data = myDBAdapter.SelectAll(database);
+        return myDBAdapter.SelectAll(database);
     }
-
-
 }

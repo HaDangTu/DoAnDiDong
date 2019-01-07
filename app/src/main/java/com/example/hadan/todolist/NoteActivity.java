@@ -1,7 +1,6 @@
 package com.example.hadan.todolist;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -54,34 +52,33 @@ public class NoteActivity extends AppCompatActivity {
     public void onBackPressed(){
         if (!tileEdText.getText().toString().equals(tmpTile) ||
                 !contentEdText.getText().toString().equals(tmpContent)){
-            AlertDialog.Builder alerDialogBuilder = new AlertDialog.Builder(this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
             //set tile for dialog
-            alerDialogBuilder.setTitle("Do you want to save changes ?");
-            alerDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setTitle("Do you want to save changes ?");
+            alertDialogBuilder.setCancelable(false);
 
             //set button yes
-            alerDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dateCreate = new Date();
                     InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
                             dateCreate);
+                    finish();
 
                 }
             });
 
             //set button no
-            alerDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    /*Intent intent  = new Intent(NoteActivity.this, MainActivity.class);
-                    startActivity(intent);*/
                     finish();
                 }
             });
 
-            AlertDialog alertDialog = alerDialogBuilder.create();
+            AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
         else finish();
@@ -97,8 +94,6 @@ public class NoteActivity extends AppCompatActivity {
                 tmpContent = contentEdText.getText().toString();
 
                 dateCreate = new Date();
-                //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
                 InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
                         dateCreate);
             }
@@ -116,7 +111,7 @@ public class NoteActivity extends AppCompatActivity {
         {
             mgs = "FAIL";
         }
-        else mgs = "SUCCESSFULL";
+        else mgs = "SUCCESSFUL";
         Toast.makeText(this, mgs, Toast.LENGTH_LONG).show();
     }
 
