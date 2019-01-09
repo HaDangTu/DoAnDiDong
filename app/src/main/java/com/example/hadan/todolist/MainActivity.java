@@ -71,7 +71,17 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())){
             String query = intent.getStringExtra(SearchManager.QUERY);
-            searchNote(query);
+
+            List<Note> searchNote = new ArrayList<Note>();
+
+            for(Note note:data){
+                if (note.getTile().contains(query)){
+                    searchNote.add(note);
+                }
+            }
+
+            myReViewAdapter.setData(searchNote);
+            recyclerView.setAdapter(myReViewAdapter);
         }
     }
 
@@ -116,15 +126,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void searchNote(String query){
-        List<Note> searchNote = new ArrayList<Note>();
 
-        for(Note note:data){
-            if (note.getTile().contains(query)){
-                searchNote.add(note);
-            }
-        }
-
-        myReViewAdapter.setData(searchNote);
-        recyclerView.setAdapter(myReViewAdapter);
     }
 }
