@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,6 @@ public class NoteActivity extends AppCompatActivity {
     String tmpTile;
     String tmpContent;
 
-    private Button btnSave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +38,24 @@ public class NoteActivity extends AppCompatActivity {
 
         tileEdText = findViewById(R.id.TileEdText);
         contentEdText = findViewById(R.id.ContentEdText);
-        btnSave = findViewById(R.id.SaveBtn);
-
-        onClickBtnSave();
 
         tmpTile = tileEdText.getText().toString();
         tmpContent = contentEdText.getText().toString();
 
+
+        FloatingActionButton fabSave = findViewById(R.id.fabSave);
+        fabSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tmpTile = tileEdText.getText().toString();
+                tmpContent = contentEdText.getText().toString();
+
+                dateCreate = new Date();
+                InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
+                        dateCreate);
+                finish();
+            }
+        });
 
     }
 
@@ -89,21 +100,6 @@ public class NoteActivity extends AppCompatActivity {
         }
         else finish();
 
-    }
-
-    public void onClickBtnSave()
-    {
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tmpTile = tileEdText.getText().toString();
-                tmpContent = contentEdText.getText().toString();
-
-                dateCreate = new Date();
-                InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
-                        dateCreate);
-            }
-        });
     }
 
     public void InsertDatabase(String tile, String content, Date dateCreate)

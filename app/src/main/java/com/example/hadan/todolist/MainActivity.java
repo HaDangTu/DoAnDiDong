@@ -69,28 +69,46 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myReViewAdapter);
-
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())){
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            flag = true;
-            searchNote(query);
-        }
     }
 
     @Override
     public void onResume(){
-        if (flag == false) {
-            data = loadDataFromDatabase();
-            myReViewAdapter.setData(data);
-            recyclerView.setAdapter(myReViewAdapter);
-        }
+        data = loadDataFromDatabase();
+        myReViewAdapter.setData(data);
+        recyclerView.setAdapter(myReViewAdapter);
         super.onResume();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_find);
+        SearchView searchView = (SearchView)menuItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                List<Note>searchResult = new ArrayList<>();
+
+                for(Note note: data){
+                    if (note.getTile().contains(newText)){
+                        searchResult.add(note);
+                    }
+                }
+
+                myReViewAdapter.setData(searchResult);
+                recyclerView.setAdapter(myReViewAdapter);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -131,5 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
         myReViewAdapter.setData(searchNote);
         recyclerView.setAdapter(myReViewAdapter);
+
     }
 }
