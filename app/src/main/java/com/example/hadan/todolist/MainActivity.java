@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Note> data;
 
+    boolean flag;
     Button btnDel;
 
     @Override
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        flag = false;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -71,25 +73,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())){
             String query = intent.getStringExtra(SearchManager.QUERY);
-
-            List<Note> searchNote = new ArrayList<Note>();
-
-            for(Note note:data){
-                if (note.getTile().contains(query)){
-                    searchNote.add(note);
-                }
-            }
-
-            myReViewAdapter.setData(searchNote);
-            recyclerView.setAdapter(myReViewAdapter);
+            flag = true;
+            searchNote(query);
         }
     }
 
     @Override
     public void onResume(){
-        data = loadDataFromDatabase();
-        myReViewAdapter.setData(data);
-        recyclerView.setAdapter(myReViewAdapter);
+        if (flag == false) {
+            data = loadDataFromDatabase();
+            myReViewAdapter.setData(data);
+            recyclerView.setAdapter(myReViewAdapter);
+        }
         super.onResume();
     }
     @Override
@@ -126,6 +121,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void searchNote(String query){
+        List<Note> searchNote = new ArrayList<Note>();
 
+        for(Note note:data){
+            if (note.getTile().contains(query)){
+                searchNote.add(note);
+            }
+        }
+
+        myReViewAdapter.setData(searchNote);
+        recyclerView.setAdapter(myReViewAdapter);
     }
 }
