@@ -26,6 +26,7 @@ public class MyRecyclerViewAdapter extends
     public final int VALUE_CONTENT = 2;
 
     public void setData(List<Note> data) {this.data = data;}
+    public List<Note> getData() {return this.data;}
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -39,7 +40,7 @@ public class MyRecyclerViewAdapter extends
 
             tileTV = itemView.findViewById(R.id.tile);
             contentTV = itemView.findViewById(R.id.content);
-            btnDelete = itemView.findViewById(R.id.btnDel);
+            //btnDelete = itemView.findViewById(R.id.btnDel);
             noteItem = itemView.findViewById(R.id.note_item);
         }
     }
@@ -81,7 +82,7 @@ public class MyRecyclerViewAdapter extends
             }
         });
 
-        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+        /*viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = viewHolder.getLayoutPosition();
@@ -97,7 +98,7 @@ public class MyRecyclerViewAdapter extends
                 data.remove(position);
                 notifyDataSetChanged();
             }
-        });
+        });*/
     }
 
     public interface OnItemClickedListenter{

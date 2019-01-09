@@ -56,7 +56,7 @@ public class NoteActivity extends AppCompatActivity {
 
             //set tile for dialog
             alertDialogBuilder.setTitle("Do you want to save changes ?");
-            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setCancelable(true);
 
             //set button yes
             alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -70,6 +70,12 @@ public class NoteActivity extends AppCompatActivity {
                 }
             });
 
+            alertDialogBuilder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
             //set button no
             alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override

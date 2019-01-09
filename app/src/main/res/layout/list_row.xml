@@ -13,11 +13,11 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="7dp" />
 
-    <Button
+    <!--<Button
         android:id="@+id/btnDel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="15dp"
-        android:text="@string/button_delete" />
+        android:text="@string/button_delete" />-->
 </LinearLayout>
