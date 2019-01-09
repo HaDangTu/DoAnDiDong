@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 searchNote.add(note);
             }
         }
+
         myReViewAdapter.setData(searchNote);
         recyclerView.setAdapter(myReViewAdapter);
     }
