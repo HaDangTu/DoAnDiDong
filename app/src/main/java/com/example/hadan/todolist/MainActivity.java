@@ -137,18 +137,4 @@ public class MainActivity extends AppCompatActivity {
         database = myDBAdapter.getReadableDatabase();
         return myDBAdapter.SelectAll(database);
     }
-
-    public void searchNote(String query){
-        List<Note> searchNote = new ArrayList<Note>();
-
-        for(Note note:data){
-            if (note.getTile().contains(query)){
-                searchNote.add(note);
-            }
-        }
-
-        myReViewAdapter.setData(searchNote);
-        recyclerView.setAdapter(myReViewAdapter);
-
-    }
 }

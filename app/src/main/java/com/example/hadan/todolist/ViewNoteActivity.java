@@ -3,7 +3,6 @@ package com.example.hadan.todolist;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 import android.widget.EditText;
 import java.util.Date;
 import android.support.design.widget.FloatingActionButton;
-import java.util.List;
 
 public class ViewNoteActivity extends AppCompatActivity {
 
