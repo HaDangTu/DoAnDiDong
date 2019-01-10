@@ -27,15 +27,11 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Note> data;
 
-    boolean flag;
-    Button btnDel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        flag = false;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

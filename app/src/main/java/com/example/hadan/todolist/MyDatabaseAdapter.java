@@ -120,4 +120,39 @@ public class MyDatabaseAdapter extends SQLiteOpenHelper {
         database = this.getWritableDatabase();
         return database.delete(TABLE_NAME, selection, null);
     }
+
+    public Note SelectLast(){
+        SQLiteDatabase database;
+        database = this.getReadableDatabase();
+
+        String[] projection = {ID, Tile, Content,
+                Date};
+
+        Cursor cursor = database.query(
+                TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        cursor.moveToLast();
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(ID));
+        String tile = cursor.getString(cursor.getColumnIndexOrThrow(Tile));
+        String content = cursor.getString(cursor.getColumnIndexOrThrow(Content));
+        String dateInString = cursor.getString(cursor.getColumnIndexOrThrow(Date));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.US);
+        Date date;
+        try {
+            date = sdf.parse(dateInString);
+        }catch(ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return new Note(id, tile, content, date);
+    }
 }

@@ -24,11 +24,13 @@ public class NoteActivity extends AppCompatActivity {
     String tmpTile;
     String tmpContent;
 
+    boolean flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
+        flag = false;
         dbHelper = new MyDatabaseAdapter(this);
         db = dbHelper.getWritableDatabase();
 
@@ -43,13 +45,28 @@ public class NoteActivity extends AppCompatActivity {
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tmpTile = tileEdText.getText().toString();
-                tmpContent = contentEdText.getText().toString();
+                if (!tileEdText.getText().toString().equals(tmpTile) ||
+                        !contentEdText.getText().toString().equals(tmpContent)) {
+                    if (flag == false) {
+                        flag = true;
+                        tmpTile = tileEdText.getText().toString();
+                        tmpContent = contentEdText.getText().toString();
 
-                dateCreate = new Date();
-                InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
-                        dateCreate);
-                finish();
+                        dateCreate = new Date();
+                        InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
+                                dateCreate);
+                    } else {
+                        Note note = dbHelper.SelectLast();
+
+                        tmpTile = tileEdText.getText().toString();
+                        tmpContent = contentEdText.getText().toString();
+
+                        dbHelper.Update(note.getId(),
+                                tileEdText.getText().toString(),
+                                contentEdText.getText().toString(),
+                                new Date());
+                    }
+                }
             }
         });
 
@@ -69,9 +86,23 @@ public class NoteActivity extends AppCompatActivity {
             alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    dateCreate = new Date();
-                    InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
-                            dateCreate);
+                    if (flag == false) {
+                        flag = true;
+                        dateCreate = new Date();
+                        InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
+                                dateCreate);
+                    }
+                    else {
+                        Note note = dbHelper.SelectLast();
+
+                        tmpTile = tileEdText.getText().toString();
+                        tmpContent = contentEdText.getText().toString();
+
+                        dbHelper.Update(note.getId(),
+                                tileEdText.getText().toString(),
+                                contentEdText.getText().toString(),
+                                new Date());
+                    }
                     finish();
 
                 }
