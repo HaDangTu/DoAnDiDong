@@ -53,7 +53,7 @@ public class MyRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final RecyclerViewHolder viewHolder, int position){
         Note note = data.get(position);
-        viewHolder.tileTV.setText(note.getTile());
+        viewHolder.tileTV.setText(note.getTitle());
 
         viewHolder.noteItem.setOnClickListener(new View.OnClickListener() {
             @Override

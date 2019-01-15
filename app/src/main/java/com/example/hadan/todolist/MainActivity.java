@@ -1,10 +1,8 @@
 package com.example.hadan.todolist;
 
 
-import android.app.SearchManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -95,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 List<Note>searchResult = new ArrayList<>();
 
                 for(Note note: data){
-                    if (note.getTile().contains(newText)){
+                    if (note.getTitle().contains(newText)){
                         searchResult.add(note);
                     }
                 }

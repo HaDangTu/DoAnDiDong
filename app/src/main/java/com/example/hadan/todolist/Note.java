@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Note {
     private int id;
-    private String tile;
+    private String title;
     private String content;
     private Date dateCreate;
 
@@ -16,12 +16,12 @@ public class Note {
         id = ID;
     }
 
-    public String getTile(){
-        return tile;
+    public String getTitle(){
+        return title;
     }
 
-    public void setTile(String Tile){
-        tile = Tile;
+    public void setTitle(String Tile){
+        title = Tile;
     }
 
     public String getContent(){
@@ -46,14 +46,14 @@ public class Note {
 
     public Note(int id, String tile, String content, Date dateCreate){
         this.id = id;
-        this.tile = tile;
+        this.title = tile;
         this.content = content;
         this.dateCreate = dateCreate;
     }
 
     public Note(int id, String tile, String content){
         this.id = id;
-        this.tile = tile;
+        this.title = tile;
         this.content = content;
     }
 }

@@ -15,13 +15,13 @@ import java.util.Date;
 
 public class NoteActivity extends AppCompatActivity {
 
-    EditText tileEdText;
+    EditText titleEdText;
     EditText contentEdText;
     Date dateCreate;
     SQLiteDatabase db;
     MyDatabaseAdapter dbHelper;
 
-    String tmpTile;
+    String tmpTitle;
     String tmpContent;
 
     boolean flag;
@@ -34,10 +34,10 @@ public class NoteActivity extends AppCompatActivity {
         dbHelper = new MyDatabaseAdapter(this);
         db = dbHelper.getWritableDatabase();
 
-        tileEdText = findViewById(R.id.TileEdText);
+        titleEdText = findViewById(R.id.TileEdText);
         contentEdText = findViewById(R.id.ContentEdText);
 
-        tmpTile = tileEdText.getText().toString();
+        tmpTitle = titleEdText.getText().toString();
         tmpContent = contentEdText.getText().toString();
 
 
@@ -45,24 +45,24 @@ public class NoteActivity extends AppCompatActivity {
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!tileEdText.getText().toString().equals(tmpTile) ||
+                if (!titleEdText.getText().toString().equals(tmpTitle) ||
                         !contentEdText.getText().toString().equals(tmpContent)) {
                     if (flag == false) {
                         flag = true;
-                        tmpTile = tileEdText.getText().toString();
+                        tmpTitle = titleEdText.getText().toString();
                         tmpContent = contentEdText.getText().toString();
 
                         dateCreate = new Date();
-                        InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
+                        InsertDatabase(titleEdText.getText().toString(), contentEdText.getText().toString(),
                                 dateCreate);
                     } else {
                         Note note = dbHelper.SelectLast();
 
-                        tmpTile = tileEdText.getText().toString();
+                        tmpTitle = titleEdText.getText().toString();
                         tmpContent = contentEdText.getText().toString();
 
                         dbHelper.Update(note.getId(),
-                                tileEdText.getText().toString(),
+                                titleEdText.getText().toString(),
                                 contentEdText.getText().toString(),
                                 new Date());
                     }
@@ -74,7 +74,7 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if (!tileEdText.getText().toString().equals(tmpTile) ||
+        if (!titleEdText.getText().toString().equals(tmpTitle) ||
                 !contentEdText.getText().toString().equals(tmpContent)){
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -89,17 +89,17 @@ public class NoteActivity extends AppCompatActivity {
                     if (flag == false) {
                         flag = true;
                         dateCreate = new Date();
-                        InsertDatabase(tileEdText.getText().toString(), contentEdText.getText().toString(),
+                        InsertDatabase(titleEdText.getText().toString(), contentEdText.getText().toString(),
                                 dateCreate);
                     }
                     else {
                         Note note = dbHelper.SelectLast();
 
-                        tmpTile = tileEdText.getText().toString();
+                        tmpTitle = titleEdText.getText().toString();
                         tmpContent = contentEdText.getText().toString();
 
                         dbHelper.Update(note.getId(),
-                                tileEdText.getText().toString(),
+                                titleEdText.getText().toString(),
                                 contentEdText.getText().toString(),
                                 new Date());
                     }
